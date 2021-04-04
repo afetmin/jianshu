@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react'
 import { Button, Input, List } from 'antd'
 import store from '../../store'
+import actionTypes from '../../store/actionTypes'
+
 class Todo extends React.Component {
   constructor(props) {
     super(props)
@@ -38,20 +40,20 @@ class Todo extends React.Component {
 
   handleItemDel(index) {
     const action = {
-      type: "del_item",
+      type: actionTypes.DELETE_ITEM,
       index
     }
     store.dispatch(action)
   }
   handleBtnClick() {
     const action = {
-      type: "add_item"
+      type: actionTypes.ADD_ITEM
     }
     store.dispatch(action)
   }
   handleChange(event) {
     const action = {
-      type: 'change_input_value',
+      type: actionTypes.CHANGE_INPUT_VALUE,
       inputValue: event.target.value
     }
     store.dispatch(action)
