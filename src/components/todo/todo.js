@@ -29,11 +29,19 @@ class Todo extends React.Component {
           style={{ width: "200px", margin: "10px 20px" }}
           bordered
           dataSource={this.state.list}
-          renderItem={item => <List.Item>{item}</List.Item>}
+          renderItem={(item,index) => <List.Item onClick={() => this.handleItemDel(index)}>{item}</List.Item>}
         ></List>
       </Fragment>
 
     )
+  }
+
+  handleItemDel(index) {
+    const action = {
+      type: "del_item",
+      index
+    }
+    store.dispatch(action)
   }
   handleBtnClick() {
     const action = {

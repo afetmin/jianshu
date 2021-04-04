@@ -2,17 +2,23 @@ const defaultState = {
   inputValue: '',
   list: []
 }
-const reducer = (state = defaultState, actions) => {
+const reducer = (state = defaultState, action) => {
 
-    if (actions.type === "change_input_value")  {
+    if (action.type === "change_input_value")  {
       const newState = JSON.parse(JSON.stringify(state))
-      newState.inputValue = actions.inputValue
+      newState.inputValue = action.inputValue
       return newState
     }
-    if(actions.type === "add_item") {
+    if(action.type === "add_item") {
       const newState = JSON.parse(JSON.stringify(state))
       newState.list.push(newState.inputValue)
       newState.inputValue = ""
+      return newState
+    }
+
+    if(action.type === "del_item") {
+      const newState = JSON.parse(JSON.stringify(state))
+      newState.list.splice(action.index, 1)
       return newState
     }
     return state
