@@ -13,8 +13,10 @@ const reducer = (state = defaultState, action) => {
     }
     if(action.type === actionTypes.ADD_ITEM) {
       const newState = JSON.parse(JSON.stringify(state))
-      newState.list.push(newState.inputValue)
-      newState.inputValue = ""
+      if (newState.inputValue) {
+        newState.list.push(newState.inputValue)
+        newState.inputValue = ""
+      }
       return newState
     }
 

@@ -1,66 +1,53 @@
 import React, { Fragment } from 'react'
 import { Button, Input, List } from 'antd'
-import store from '../../store'
-import actionTypes from '../../store/actionTypes'
+import { connect } from 'react-redux'
+import { getBtnAction, getItemDeleteAction, getInputChangeAction } from '../../store/actionCreator'
+// import axios from 'axios'
+const Todo = (props) => {
+  const { handleChange, handleBtnClick, handleItemDel, inputValue, list } = props
+  return (
+    <Fragment>
+      <Input
+        value={inputValue}
+        placeholder="todo something"
+        style={{ width: "200px", margin: "0 20px" }}
+        onChange={handleChange}
+      ></Input>
+      <Button
+        style={{ marginTop: '10px' }}
+        type="primary"
+        onClick={handleBtnClick}
+      >提交</Button>
+      <List
+        style={{ width: "200px", margin: "10px 20px" }}
+        bordered
+        dataSource={list}
+        renderItem={(item, index) => <List.Item onClick={() => handleItemDel(index)}>{item}</List.Item>}
+      ></List>
+    </Fragment>
+  )
+}
 
-class Todo extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = store.getState()
-    this.handleChange = this.handleChange.bind(this)
-    this.handleStoreChange = this.handleStoreChange.bind(this)
-    this.handleBtnClick = this.handleBtnClick.bind(this)
-    store.subscribe(this.handleStoreChange) //订阅更新数据的方法
-  }
 
-  render() {
-    return (
-      <Fragment>
-        <Input
-          value={this.state.inputValue}
-          placeholder="todo something"
-          style={{ width: "200px", margin: "0 20px" }}
-          onChange={this.handleChange}
-        ></Input>
-        <Button
-          style={{ marginTop: '10px' }}
-          type="primary"
-          onClick={this.handleBtnClick}
-        >提交</Button>
-        <List
-          style={{ width: "200px", margin: "10px 20px" }}
-          bordered
-          dataSource={this.state.list}
-          renderItem={(item,index) => <List.Item onClick={() => this.handleItemDel(index)}>{item}</List.Item>}
-        ></List>
-      </Fragment>
-
-    )
-  }
-
-  handleItemDel(index) {
-    const action = {
-      type: actionTypes.DELETE_ITEM,
-      index
-    }
-    store.dispatch(action)
-  }
-  handleBtnClick() {
-    const action = {
-      type: actionTypes.ADD_ITEM
-    }
-    store.dispatch(action)
-  }
-  handleChange(event) {
-    const action = {
-      type: actionTypes.CHANGE_INPUT_VALUE,
-      inputValue: event.target.value
-    }
-    store.dispatch(action)
-  }
-  handleStoreChange() {
-    this.setState(store.getState())
+const mapStateToProps = (state) => {
+  return {
+    inputValue: state.inputValue,
+    list: state.list
   }
 }
 
-export default Todo
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleChange(e) {
+      dispatch(getInputChangeAction(e.target.value))
+    },
+    handleBtnClick() {
+      dispatch(getBtnAction())
+    },
+    handleItemDel(index) {
+      dispatch(getItemDeleteAction(index))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Todo)
