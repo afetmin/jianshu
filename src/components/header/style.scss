@@ -1,0 +1,26 @@
+@import '../../common/style/variables.scss';
+
+.header {
+    height: 50px;
+    line-height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // background-color: $bg-color;
+    border-bottom: 1px solid $main-color;
+    box-shadow: 2px 2px 5px rgba(230, 57, 70, .2);
+
+    .menu {
+        width: 800px;
+        display: flex;
+        justify-content: space-between;
+
+        .home {
+            margin-right: 500px;
+        }
+
+        .header-item {
+            display: inline-block;
+        }
+    }
+}

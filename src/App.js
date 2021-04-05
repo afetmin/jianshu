@@ -1,8 +1,9 @@
-import Todo from './components/todo/todo'
+import Home from './pages/home'
+import Header from './components/header'
 function App() {
   return (
     <div className="App">
-      <Todo></Todo>
+      <Header></Header>
     </div>
   );
 }
